@@ -1,0 +1,32 @@
+name: Publish to npm
+# Publishes @totalaudiopromo/spotcheck when a version tag (v0.1.1, v0.2.0, ...) is pushed.
+# Uses npm trusted publishing (OIDC), so there is no npm token in this repo and no
+# one-time code to type. Provenance is attached automatically for a public repo.
+# The trusted publisher is set in the package's settings on npmjs.com and must name
+# this file, publish.yml, exactly.
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+      - name: npm new enough for trusted publishing
+        run: npm install -g npm@^11.5.1
+      - name: Tag matches package.json version
+        run: test "v$(node -p 'require("./package.json").version')" = "$GITHUB_REF_NAME"
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: dist is committed and current
+        run: git diff --exit-code -- dist
+      - run: npm publish --access public
