@@ -159,3 +159,9 @@ The compiled `dist` folder is committed so `npx github:` starts in seconds witho
 ## Licence
 
 MIT. Copyright Total Audio Promo Ltd.
+
+## Releasing
+
+Bump `version` in `package.json`, commit, then push a matching tag (for example `v0.1.1`).
+The `Publish to npm` workflow tests, builds and publishes it with npm trusted publishing, so no
+token or one-time code is involved.

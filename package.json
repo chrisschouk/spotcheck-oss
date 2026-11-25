@@ -32,7 +32,7 @@
     }
   },
   "bin": {
-    "spotcheck": "./dist/cli.js"
+    "spotcheck": "dist/cli.js"
   },
   "files": [
     "dist",
