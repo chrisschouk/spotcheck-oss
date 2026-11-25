@@ -1,6 +1,6 @@
 {
   "name": "@totalaudiopromo/spotcheck",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Check a Spotify playlist for bot-farm patterns using public data. Library, command line tool and local MCP server.",
   "license": "MIT",
   "author": "Total Audio Promo Ltd",
@@ -53,5 +53,6 @@
     "@types/node": "^22.20.6",
     "typescript": "^5.9.3",
     "vitest": "^5.1.1"
-  }
+  },
+  "mcpName": "io.github.chrisschouk/spotcheck"
 }
