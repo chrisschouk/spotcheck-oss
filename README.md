@@ -18,6 +18,22 @@ Limits worth knowing:
 - It samples the first 100 tracks of a playlist.
 - Without stored follower history, it scores the playlist as it is today. Spike and drop signals need a follower series, which you can pass in through the library.
 
+## Browser extension
+
+The `extension/` folder holds the SpotCheck extension for Chrome, Firefox and Safari. On any open.spotify.com playlist page it adds a Check button, and its toolbar popup checks a pasted playlist link. Both show the full report: the 0 to 100 score and every signal behind it. The popup can export the report as a one-row CSV.
+
+It has no accounts, plans or payments. Each check goes to the free checker at spotcheck.cc, which allows 3 checks a day for each visitor. When you reach that limit the extension shows the checker's message and a link to [Total Audio Promo](https://totalaudiopromo.com), where a full campaign of playlists can be checked.
+
+Privacy: the extension reads only the address of the public playlist page you are on, or the link you paste. It sends that address to spotcheck.cc and shows what comes back. It does not read your Spotify account, listening history or cookies, and it stores nothing.
+
+Load it unpacked in Chrome:
+
+1. Run `cd extension && npm install && npm test` if you want to check it first.
+2. Open `chrome://extensions` and switch on Developer mode.
+3. Choose Load unpacked and select the `extension/` folder.
+
+For Firefox, open `about:debugging`, choose Load Temporary Add-on and select `extension/manifest.firefox.json`. `npm run build` inside `extension/` writes the store zip to `extension/dist/`.
+
 ## Install
 
 Node 22 or later. You also need a Spotify developer app, which is free: create one at [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard) and copy its client ID and client secret. SpotCheck uses the client credentials flow, so it never asks you to sign in to Spotify.
