@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=400">
+  <title>SpotCheck</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <!-- Circle background -->
+          <circle cx="12" cy="12" r="10" fill="#1DB954"/>
+          <!-- Sound bars (left side) -->
+          <rect x="6" y="11" width="2.5" height="5" rx="1.25" fill="white"/>
+          <rect x="9.5" y="8" width="2.5" height="8" rx="1.25" fill="white"/>
+          <!-- Checkmark (right side) -->
+          <path d="M14 12.5l2 2 3.5-4" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo-text">SpotCheck</span>
+      </div>
+    </header>
+
+    <div class="tab-content active" id="tab-single">
+      <div class="input-group">
+        <input
+          type="text"
+          id="playlistUrl"
+          placeholder="Paste Spotify playlist URL..."
+          autocomplete="off"
+        >
+        <button class="btn-check" id="checkBtn">
+          <span class="btn-text">Check</span>
+          <span class="btn-loading hidden">
+            <svg class="spinner" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="60" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <!-- Results -->
+      <div class="results hidden" id="results">
+        <div class="result-card">
+          <!-- Playlist Header -->
+          <div class="playlist-header">
+            <img class="playlist-image" id="playlistImage" src="" alt="">
+            <div class="playlist-info">
+              <h2 class="playlist-name" id="playlistName">-</h2>
+              <a class="curator-link" id="curatorLink" href="#" target="_blank">
+                <span id="curatorName">-</span>
+              </a>
+            </div>
+            <div class="status-badge" id="statusBadge">
+              <span class="status-dot"></span>
+              <span class="status-text">Active</span>
+            </div>
+          </div>
+
+          <!-- Metrics Grid -->
+          <div class="metrics-grid">
+            <div class="metric">
+              <span class="metric-value" id="followers">-</span>
+              <span class="metric-label">Followers</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value" id="tracks">-</span>
+              <span class="metric-label">Tracks</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value" id="visibility">-</span>
+              <span class="metric-label">Visibility</span>
+            </div>
+          </div>
+
+          <!-- Bot score -->
+          <div class="bot-score-section" id="botScoreSection">
+            <div class="bot-hero-box">
+              <div class="gauge-container">
+                <svg class="gauge-svg" viewBox="0 0 100 100" aria-hidden="true">
+                  <circle class="gauge-bg" cx="50" cy="50" r="38"></circle>
+                  <circle class="gauge-fill" id="gaugeCircle" cx="50" cy="50" r="38"></circle>
+                </svg>
+                <div class="gauge-center">
+                  <span class="bot-score-value" id="botScore">-</span>
+                  <span class="bot-score-sub">BOT RISK</span>
+                </div>
+              </div>
+              <div class="bot-score-summary">
+                <span class="bot-score-label">Bot Risk Score</span>
+              </div>
+            </div>
+            <!-- Legacy fill bar, kept hidden as a fallback and so popup.js has
+                 a stable element to write to if the gauge is ever removed. -->
+            <div class="bot-score-bar" style="display:none;">
+              <div class="bot-score-fill" id="botScoreFill" style="width: 0%"></div>
+            </div>
+            <div class="bot-score-factors" id="botScoreFactors">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="result-actions">
+            <button class="btn-secondary" id="openPlaylistBtn">
+              <svg viewBox="0 0 16 16" width="14" height="14"><path fill="currentColor" d="M8.5 1.5a.5.5 0 0 0-1 0v5h-5a.5.5 0 0 0 0 1h5v5a.5.5 0 0 0 1 0v-5h5a.5.5 0 0 0 0-1h-5v-5z"/></svg>
+              Open
+            </button>
+            <button class="btn-secondary" id="exportBtn">
+              <svg viewBox="0 0 16 16" width="14" height="14"><path fill="currentColor" d="M8 1a.5.5 0 0 1 .5.5v9.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 11.293V1.5A.5.5 0 0 1 8 1z"/><path fill="currentColor" d="M2 14.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div class="error-state hidden" id="errorState">
+        <svg class="error-icon" viewBox="0 0 24 24" width="48" height="48">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="#ef4444" stroke-width="2"/>
+          <path d="M12 8v4M12 16h.01" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p class="error-title" id="errorTitle">Playlist not found</p>
+        <p class="error-message" id="errorMessage">This playlist may be private or no longer exists.</p>
+      </div>
+    </div>
+
+    <!-- Daily limit reached -->
+      <div class="error-state hidden" id="limitState">
+        <p class="error-title">You have used today's free checks</p>
+        <p class="error-message" id="limitMessage"></p>
+        <a class="btn-secondary" id="limitLink" href="https://totalaudiopromo.com" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+
+    <div class="data-notice" id="dataNotice">
+      <p>The extension reads only the public playlist page address and sends it to the free spotcheck.cc checker. 3 checks a day. <a href="https://spotcheck.cc/privacy" target="_blank" rel="noopener">Privacy</a></p>
+    </div>
+
+    <div class="tap-attribution">
+      Part of <a href="https://totalaudiopromo.com" target="_blank" rel="noopener">Total Audio Promo</a>
+    </div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

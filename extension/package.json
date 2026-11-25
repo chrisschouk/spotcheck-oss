@@ -1,0 +1,28 @@
+{
+  "name": "spotcheck-extension",
+  "version": "1.1.0",
+  "description": "SpotCheck: free Spotify playlist bot checker (Chrome, Firefox, Safari)",
+  "private": true,
+  "scripts": {
+    "build": "./scripts/build.sh",
+    "lint": "eslint lib popup background content",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "spotify",
+    "playlist",
+    "validator",
+    "chrome-extension",
+    "firefox-extension",
+    "safari-extension"
+  ],
+  "author": "Total Audio Promo",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "globals": "^17.8.0",
+    "vitest": "^3.2.6"
+  }
+}
