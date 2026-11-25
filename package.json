@@ -1,0 +1,57 @@
+{
+  "name": "@totalaudiopromo/spotcheck",
+  "version": "0.1.0",
+  "description": "Check a Spotify playlist for bot-farm patterns using public data. Library, command line tool and local MCP server.",
+  "license": "MIT",
+  "author": "Total Audio Promo Ltd",
+  "homepage": "https://github.com/chrisschouk/spotcheck-oss#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisschouk/spotcheck-oss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chrisschouk/spotcheck-oss/issues"
+  },
+  "keywords": [
+    "spotify",
+    "playlist",
+    "bot-detection",
+    "mcp",
+    "music"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "spotcheck": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.1"
+  }
+}
