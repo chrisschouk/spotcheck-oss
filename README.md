@@ -165,3 +165,6 @@ MIT. Copyright Total Audio Promo Ltd.
 Bump `version` in `package.json`, commit, then push a matching tag (for example `v0.1.1`).
 The `Publish to npm` workflow tests, builds and publishes it with npm trusted publishing, so no
 token or one-time code is involved.
+
+The MCP registry entry (`server.json`) publishes itself through the `Publish to MCP registry`
+workflow whenever `server.json` changes on `main`. Bump its `version` with each change.

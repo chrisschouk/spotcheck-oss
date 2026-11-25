@@ -1,0 +1,24 @@
+name: Publish to MCP registry
+# Publishes server.json to registry.modelcontextprotocol.io whenever it changes on main.
+# Signs in with GitHub Actions OIDC, so no registry token lives anywhere and nobody has
+# to approve a device code. The registry refuses a version it already has, so bump
+# "version" in server.json with each change.
+on:
+  push:
+    branches: [main]
+    paths: [server.json]
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install mcp-publisher 1.5.0
+        run: |
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/download/v1.5.0/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+      - run: ./mcp-publisher validate
+      - run: ./mcp-publisher login github-oidc
+      - run: ./mcp-publisher publish
