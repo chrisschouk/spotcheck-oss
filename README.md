@@ -138,6 +138,8 @@ npm test
 npm run build
 ```
 
+The compiled `dist` folder is committed so `npx github:` starts in seconds without a build step. Run `npm run build` and commit `dist` with any change to `src`; CI fails if they differ.
+
 ## Licence
 
 MIT. Copyright Total Audio Promo Ltd.
