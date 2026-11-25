@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
-import { CHECK_PLAYLIST, checkMessage, interpretCheck, requestCheck } from '../lib/check-result.js';
+import { CHECK_PLAYLIST, TAP_URL, checkMessage, interpretCheck, requestCheck } from '../lib/check-result.js';
 
 const dir = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -54,7 +54,7 @@ describe('interpretCheck', () => {
     expect(result).toEqual({
       kind: 'limit',
       message: 'Used up',
-      next: { message: 'Check every playlist in TAP', url: 'https://totalaudiopromo.com' },
+      next: { message: 'Check every playlist in TAP', url: TAP_URL },
     });
   });
 });
@@ -65,7 +65,7 @@ describe('checkMessage', () => {
       "Couldn't check this playlist. We couldn't reach SpotCheck. Check your connection and try again.",
     );
     expect(checkMessage(interpretCheck({ ok: false, status: 429, message: 'Used up' }))).toBe(
-      'Used up Check every playlist in your campaign in TAP: https://totalaudiopromo.com',
+      `Used up Check every playlist in your campaign in TAP: ${TAP_URL}`,
     );
   });
 });

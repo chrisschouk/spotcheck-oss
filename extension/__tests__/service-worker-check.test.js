@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { interpretCheck, requestCheck } from '../lib/check-result.js';
+import { TAP_URL, interpretCheck, requestCheck } from '../lib/check-result.js';
 
 let messageListener;
 
@@ -63,7 +63,7 @@ describe('CHECK_PLAYLIST', () => {
     const result = interpretCheck(await requestCheck(runtime, LOFI_GIRL));
 
     expect(result).toMatchObject({ kind: 'limit', message: 'Used up' });
-    expect(result.next.url).toBe('https://totalaudiopromo.com');
+    expect(result.next.url).toBe(TAP_URL);
   });
 
   it("says it couldn't check when the API is unreachable", async () => {

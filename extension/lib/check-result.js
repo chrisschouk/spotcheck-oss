@@ -10,7 +10,7 @@
 
 export const CHECK_PLAYLIST = 'CHECK_PLAYLIST';
 
-export const TAP_URL = 'https://totalaudiopromo.com';
+export const TAP_URL = 'https://totalaudiopromo.com/playlist-check?utm_source=spotcheck&utm_medium=extension&utm_campaign=free_checker';
 
 const COULD_NOT_CHECK = "Couldn't check this playlist";
 
