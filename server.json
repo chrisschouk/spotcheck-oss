@@ -3,7 +3,7 @@
   "name": "io.github.chrisschouk/spotcheck",
   "title": "SpotCheck",
   "description": "Score Spotify playlists for bot-farm patterns and triage an artificial streaming warning.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "repository": {
     "url": "https://github.com/chrisschouk/spotcheck-oss",
     "source": "github"
@@ -13,7 +13,9 @@
     {
       "src": "https://spotcheck.cc/icon.svg",
       "mimeType": "image/svg+xml",
-      "sizes": ["any"]
+      "sizes": [
+        "any"
+      ]
     }
   ],
   "packages": [
@@ -21,8 +23,15 @@
       "registryType": "npm",
       "identifier": "@totalaudiopromo/spotcheck",
       "version": "0.1.1",
-      "transport": { "type": "stdio" },
-      "packageArguments": [{ "type": "positional", "value": "mcp" }],
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        }
+      ],
       "environmentVariables": [
         {
           "name": "SPOTIFY_CLIENT_ID",
@@ -42,6 +51,12 @@
           "isSecret": true
         }
       ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://spotcheck.cc/api/mcp"
     }
   ]
 }
