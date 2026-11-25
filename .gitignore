@@ -3,3 +3,6 @@ node_modules
 .env.*
 *.log
 extension/dist
+
+# mcp-publisher login tokens
+.mcpregistry_*_token
